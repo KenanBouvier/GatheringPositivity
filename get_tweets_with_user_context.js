@@ -14,13 +14,15 @@ const readline = require('readline').createInterface({
 // To set environment variables on macOS or Linux, run the export commands below from the terminal:
 // export CONSUMER_KEY='YOUR-KEY'
 // export CONSUMER_SECRET='YOUR-SECRET'
-const consumer_key = process.env.CONSUMER_KEY;
-const consumer_secret = process.env.CONSUMER_SECRET;
+// const consumer_key = process.env.CONSUMER_KEY;
+// const consumer_secret = process.env.CONSUMER_SECRET;
+const consumer_key = "1257765160309096448-feLJQhAZ8QJk4SEK1kPEkDZr1LPv4d";
+const consumer_secret = "08hpLB1h3qw0OJ3xd1mJvSkySNTmDEczsPBEgm6WoNT7Z";
 
 // These are the parameters for the API request
 // specify Tweet IDs to fetch, and any additional fields that are required
 // by default, only the Tweet ID and text are returned
-const tweetIDs = '1278747501642657792,1275828087666679809'; // Edit the Tweet IDs to look up
+const tweetIDs = ''; // Edit the Tweet IDs to look up
 const params = 'tweet.fields=lang,author_id&user.fields=created_at'; // Edit optional query parameters here
 
 const endpointURL = `https://api.twitter.com/2/tweets?ids=${tweetIDs}&${params}`;
