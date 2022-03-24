@@ -1,0 +1,50 @@
+form {
+      position: relative;
+      width: 100%;
+      border-radius: 25px;
+      background: #8E8D8A;
+      margin-left: 20%;
+}
+
+.form-inner {
+    padding: 40px;
+}
+
+.form-inner input, .form-inner textarea {
+    outline: none;
+    font-size: 25px;
+    display: block;
+    width: 100%;
+    padding: 15px;
+    padding-top: 20px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 20px;
+    background: #fff;
+}
+
+.formContent{
+  margin-left: 29.78%;
+}
+
+.submit {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 20px;
+    border: none;
+    background: #E98074;
+    font-size: 16px;
+    font-weight: 400;
+    color: #;
+}
+
+.submit:hover {
+    color: #fff;
+}
+
+@media (min-width: 568px) {
+    form {
+        width: 60%;
+    }
+}
