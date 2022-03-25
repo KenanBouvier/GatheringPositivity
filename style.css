@@ -8,7 +8,7 @@ body{
 }
 
 .topic{
-  color:#FFFFFF ;
+  color: #FFFFFF;
   margin-left: 5%;
   font-size: 20px;
 }
@@ -40,5 +40,4 @@ li a{
   text-decoration: none;
   text-align: center;
   padding:  10px;
-
 }
