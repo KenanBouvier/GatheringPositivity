@@ -66,7 +66,7 @@
 
             $culledTweets = findGoodTweets($validTimeTweets);
             if(count($culledTweets)>0){
-                // insertTweetsInDB($culledTweets,$conn);
+                insertTweetsInDB($culledTweets,$conn);
             }
         }
 
