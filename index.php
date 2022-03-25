@@ -8,14 +8,21 @@
     // make query and get restult
     $result = mysqli_query($conn,$sql);
 
-    // fetch resulting rows
+    //date variable
+    $sql = 'SELECT latestDate FROM latestupdatedate WHERE id=1';
+
+    $dateResult = mysqli_query($conn,$sql);
+    $prevDate = mysqli_fetch_all($dateResult,MYSQLI_ASSOC);
+
+    $strPrevDate = $prevDate[0]['latestDate'];
+    // fetch twitter link resulting rows
     $twitterlinks = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
     // free result from memory as not needed
     mysqli_free_result($result);
+    mysqli_free_result($dateResult);
+
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +51,7 @@
     <hr> 
     <?php
         include 'get_tweets.php';
-        $allAccounts = ['thetimes','RedPandaEveryHr','huskersbot'];
+        $allAccounts = ['nvidia'];
 
         // We can do this process for every user in list:
         // Get all the tweets by that user
@@ -55,9 +62,11 @@
         foreach($allAccounts as $screen_name){
             $tweets = getTweetsFromUser($screen_name);
 
-            $culledTweets = findGoodTweets($tweets);
+            $validTimeTweets = getValidTimeTweets($tweets,$strPrevDate,$conn);
+
+            $culledTweets = findGoodTweets($validTimeTweets);
             if(count($culledTweets)>0){
-                insertTweetsInDB($culledTweets,$conn);
+                // insertTweetsInDB($culledTweets,$conn);
             }
         }
 
@@ -68,14 +77,10 @@
 
     <?php
         foreach($twitterlinks as $link){?>
-
-            <!-- <h1 class ="topic"><?php echo htmlspecialchars($link['title']) ?></h1> -->
             <blockquote class="twitter-tweet tw-align-center">
                 <a href="<?php echo htmlspecialchars($link['link']) ?>"></a> 
             </blockquote>
-
     <?php }?>
 
 </body>
-
 </html>

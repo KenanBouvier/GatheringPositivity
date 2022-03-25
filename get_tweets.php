@@ -1,5 +1,6 @@
 <?php
-// TODO: to combat the repeated inserts into db, keep track of latest refresh or similar and only check tweets from that time and forwards.
+
+	require_once 'vadersentiment.php';
 
 	function getTweetsFromUser($screenName){
 		// include config and twitter api wrappe
@@ -18,7 +19,7 @@
 		$requestMethod = 'GET';
 
 		// twitter api endpoint data
-		$getfield = '?count=1&screen_name=';
+		$getfield = '?count=10&screen_name=';
 
 		$getfield = $getfield.$screenName;
 
@@ -33,20 +34,94 @@
 		return $tweets;
 	}
 
+	function getValidTimeTweets($tweets,$prevDateStr,$conn){
+		$validTweets = [];
+
+		// get sql variable representing latest time done request
+		// $prevDateStr = 'Wed Mar 23 14:40:27 +0000 2022'; 
+
+		$recentDate = date_create_from_format('D M d G:i:s e Y',$prevDateStr);
+
+		foreach($tweets as $tweet){
+
+			if(isset($tweet['retweeted_status'],$tweet)){
+				$dateStr = $tweet['retweeted_status']['created_at'];
+			}
+			else{
+				$dateStr = $tweet['created_at'];
+			}
+
+			$dateCreation = date_create_from_format('D M d G:i:s e Y',$dateStr);
+
+			if($dateCreation > $recentDate){
+				array_push($validTweets,$tweet);
+			}
+			else{
+
+			}
+
+		}
+		//update sql variable to now. I.e: date('D M d G:i:s e Y')
+
+		$nowDateStr = date('D M d G:i:s e Y');
+
+		$sql = "UPDATE latestupdatedate SET latestDate = '$nowDateStr' WHERE id = 1";
+
+		if(mysqli_query($conn,$sql)){
+			// echo("YAY");
+		}
+		else{
+			echo("Oh no that didn't work :(".mysqli_error());
+		}
+
+		return $validTweets;
+	}
+
 
 	function correctTypeOfTweet($txt){
-		
+		return true;
+		//optimise this as it is important to control allowed
+
+		$lowerBound = 1;
+		$goodWords = ['startup','initiative','helping','saving','launched','launch','build','project','program','aim'];
+
+		$words = explode(' ',$txt);
+		$counter = 0;
+
+		foreach($words as $word){
+			if(in_array($word,$goodWords)){
+				$counter += 1;
+			}
+		}
+		if($counter>$lowerBound){
+			return true;
+		}
 
 		return true;
 	}
 
+
+	function sentimentAnalysis($txt){
+		return true;
+		$sentimenter = new SentimentIntensityAnalyzer();
+		$res = $sentimenter->getSentiment($txt);
+		// print_r($res);
+		if($res['compound']>0.75){
+			echo("PASSED");
+			return true;
+		}
+		return false;
+	}
+
 	function textAnalysis($txt){
-		$txt = strtolower($txt);
+		$txt = preg_replace("/[^A-Za-z ]/", '', $txt);
 
 		if(!correctTypeOfTweet($txt)){
 			return false;
 		}
-		//NLP algo here!
+		if(!sentimentAnalysis($txt)){
+			return false;
+		}
 
 		return true;
 	}
