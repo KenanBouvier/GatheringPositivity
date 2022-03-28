@@ -65,9 +65,9 @@
 		}
 		//update sql variable to now. I.e: date('D M d G:i:s e Y')
 
-		$nowDateStr = "date('D M d G:i:s e Y')";
+		$nowDateStr = date('D M d G:i:s e Y');
 
-		$sql = "UPDATE latestupdatedate SET latestDate = $nowDateStr WHERE id = 1";
+		$sql = "UPDATE latestupdatedate SET latestDate = '$nowDateStr' WHERE id = 1";
 
 		if(mysqli_query($conn,$sql)){
 			// echo("YAY");
