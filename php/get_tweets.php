@@ -16,7 +16,9 @@
 		);
 		
 		$url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+
 		$requestMethod = 'GET';
+
 
 		// twitter api endpoint data
 		$getfield = '?count=10&screen_name=';
@@ -63,15 +65,15 @@
 		}
 		//update sql variable to now. I.e: date('D M d G:i:s e Y')
 
-		$nowDateStr = date('D M d G:i:s e Y');
+		$nowDateStr = "date('D M d G:i:s e Y')";
 
-		$sql = "UPDATE latestupdatedate SET latestDate = '$nowDateStr' WHERE id = 1";
+		$sql = "UPDATE latestupdatedate SET latestDate = $nowDateStr WHERE id = 1";
 
 		if(mysqli_query($conn,$sql)){
 			// echo("YAY");
 		}
 		else{
-			echo("Oh no that didn't work :(".mysqli_error());
+			echo("Oh no date update date didn't work :(".mysqli_error());
 		}
 
 		return $validTweets;
@@ -151,13 +153,13 @@
             $urlInsert = "https://twitter.com/";
             $urlInsert = $urlInsert . $screenName;
             $urlInsert = $urlInsert . "/status/";
-            $urlInsert = $urlInsert . $idVal; 
+            $urlInsert = '$urlInsert . $idVal'; 
 
-            $titlePlaceholder = "TBD";
+            $titlePlaceholder = '"TBD"';
 
-            $sql = "INSERT INTO twitterlinks(title,link) VALUES('$titlePlaceholder','$urlInsert')";
+            $sql = "INSERT INTO twitterlinks(title,link) VALUES($titlePlaceholder,$urlInsert)";
             if(!mysqli_query($conn,$sql)){
-                echo("<script>alert('something wrong when inserting into db')</script>");
+                echo("<script>console.log('something wrong when inserting into db')</script>");
             }
         }
 	}
