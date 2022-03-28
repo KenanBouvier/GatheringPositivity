@@ -2,10 +2,10 @@
 
     include('php/config/db_connect.php');
 
-    // posts on the page at any point in time
+    // max posts on the page at any point in time
     $numberOfPosts = 25;
 
-    $buffer = 1000; // number of extra unused records before deletion
+    $buffer = 1000; // number of extra unused & unshown records before deletion
 
 
     //determining number of rows that aren't shown
@@ -17,7 +17,7 @@
     $countResult = mysqli_query($conn,$sql);
     $rowCount = mysqli_fetch_all($countResult,MYSQLI_ASSOC);
     $rowCount = $rowCount[0]['COUNT(*)']; 
-    $notShown = $rowCount - $numberOfPosts;  // 5 - 3 = 2
+    $notShown = $rowCount - $numberOfPosts;
     $rowsToRemove = $notShown - $buffer;
 
     if($rowsToRemove>0){
