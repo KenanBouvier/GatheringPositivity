@@ -3,10 +3,13 @@
     include('php/config/db_connect.php');
 
     // max posts on the page at any point in time
+    // probably affects performance
     $numberOfPosts = 25;
 
     $buffer = 1000; // number of extra unused & unshown records before deletion
 
+    // if paused true then there won't be any updates
+    $paused = false;
 
     //determining number of rows that aren't shown
     // then we get the number of rows that aren't displayed
@@ -78,7 +81,7 @@
     <hr>
     <?php
         include 'php/get_tweets.php';
-        $allAccounts = ['PositiveNewsUK','somegoodnews','GoodNatureNews1','Agri_ut','actionhappiness'];
+        $allAccounts = ['GoodNatureNews1','Agri_ut','PositiveNewsUK'];
 
         // We can do this process for every user in list:
         // Get all the tweets by that user
@@ -86,7 +89,9 @@
         // insert those tweets into DB
         // that will then be displayed on page
 
+    if(!$paused){
         foreach($allAccounts as $screen_name){
+
             $tweets = getTweetsFromUser($screen_name);
             $validTimeTweets = getValidTimeTweets($tweets,$strPrevDate,$conn);
             
@@ -98,6 +103,7 @@
                 insertTweetsInDB($culledTweets,$conn);
             }
         }
+
 
         //update sql variable to now. I.e: date('D M d G:i:s e Y')
 
@@ -111,6 +117,7 @@
         else{
             echo("Oh no date update date didn't work :(".mysqli_error());
         }
+    } //end paused scope
 
         //closing the connection
         mysqli_close($conn);
