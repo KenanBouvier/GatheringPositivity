@@ -78,7 +78,7 @@
     <hr>
     <?php
         include 'php/get_tweets.php';
-        $allAccounts = ['nvidia'];
+        $allAccounts = ['PositiveNewsUK','somegoodnews','GoodNatureNews1','Agri_ut','actionhappiness'];
 
         // We can do this process for every user in list:
         // Get all the tweets by that user
@@ -88,13 +88,28 @@
 
         foreach($allAccounts as $screen_name){
             $tweets = getTweetsFromUser($screen_name);
-
             $validTimeTweets = getValidTimeTweets($tweets,$strPrevDate,$conn);
-
+            
             $culledTweets = findGoodTweets($validTimeTweets);
+
+            
+
             if(count($culledTweets)>0){
                 insertTweetsInDB($culledTweets,$conn);
             }
+        }
+
+        //update sql variable to now. I.e: date('D M d G:i:s e Y')
+
+        $nowDateStr = date('D M d G:i:s e Y');
+
+        $sql = "UPDATE latestupdatedate SET latestDate = '$nowDateStr' WHERE id = 1";
+
+        if(mysqli_query($conn,$sql)){
+            // echo("YAY");
+        }
+        else{
+            echo("Oh no date update date didn't work :(".mysqli_error());
         }
 
         //closing the connection

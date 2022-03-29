@@ -19,9 +19,8 @@
 
 		$requestMethod = 'GET';
 
-
 		// twitter api endpoint data
-		$getfield = '?count=10&screen_name=';
+		$getfield = '?count=20&screen_name=';
 
 		$getfield = $getfield.$screenName;
 
@@ -63,18 +62,6 @@
 			}
 
 		}
-		//update sql variable to now. I.e: date('D M d G:i:s e Y')
-
-		$nowDateStr = date('D M d G:i:s e Y');
-
-		$sql = "UPDATE latestupdatedate SET latestDate = '$nowDateStr' WHERE id = 1";
-
-		if(mysqli_query($conn,$sql)){
-			// echo("YAY");
-		}
-		else{
-			echo("Oh no date update date didn't work :(".mysqli_error());
-		}
 
 		return $validTweets;
 	}
@@ -109,7 +96,7 @@
 		$res = $sentimenter->getSentiment($txt);
 		// print_r($res);
 		if($res['compound']>0.75){
-			echo("PASSED");
+			// echo("PASSED");
 			return true;
 		}
 		return false;
@@ -153,13 +140,16 @@
             $urlInsert = "https://twitter.com/";
             $urlInsert = $urlInsert . $screenName;
             $urlInsert = $urlInsert . "/status/";
-            $urlInsert = '$urlInsert . $idVal'; 
+            $urlInsert = $urlInsert . $idVal; 
 
-            $titlePlaceholder = '"TBD"';
+            $titlePlaceholder = 'TBD';
 
-            $sql = "INSERT INTO twitterlinks(title,link) VALUES($titlePlaceholder,$urlInsert)";
+            $sql = "INSERT INTO twitterlinks(title,link) VALUES('$titlePlaceholder','$urlInsert');";
             if(!mysqli_query($conn,$sql)){
                 echo("<script>console.log('something wrong when inserting into db')</script>");
+            }
+            else{
+            	// echo("PASSED IN TO DB");
             }
         }
 	}
