@@ -81,7 +81,7 @@
     <hr>
     <?php
         include 'php/get_tweets.php';
-        $allAccounts = ['GoodNatureNews1','Agri_ut','PositiveNewsUK'];
+        $allAccounts = ['GoodNatureNews1','Agri_ut'];
 
         // We can do this process for every user in list:
         // Get all the tweets by that user
