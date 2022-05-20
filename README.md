@@ -13,7 +13,7 @@ This can be used as a template for similar twitter api focused projects. Fill in
 Current categories include people, nature and startups.
 
 <p align="center">
-  <img src="/exampleImages/example1.jpg" alt="drawing" width="500"/>
-  <img src="/exampleImages/example2.jpg" alt="drawing" width="500"/>
-  <img src="/exampleImages/example3.jpg" alt="drawing" width="500"/>
+  <img src="/exampleImages/example1.png" alt="drawing" width="500"/>
+  <img src="/exampleImages/example2.png" alt="drawing" width="500"/>
+  <img src="/exampleImages/example3.png" alt="drawing" width="500"/>
 </p>
