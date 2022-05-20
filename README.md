@@ -8,4 +8,4 @@ This is done by retrieving content of select users through the twitter api. This
 
 ### Template use
 
-This can be used as a template for similar twitter api focused projects (can be further built upon for multiple social media services). Fill in /config files with relevant keys and credentials.
+This can be used as a template for similar twitter api focused projects (can be further built upon for multiple social media services). Fill in /config files with relevant keys and credentials and it should be all be good to go.
