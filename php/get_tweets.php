@@ -3,7 +3,7 @@
 	require_once 'vadersentiment.php';
 
 	function getTweetsFromUser($screenName){
-		// include config and twitter api wrappe
+		// include config and twitter api wrapper
 		require_once( 'config/keys.php' );
 		require_once( 'TwitterAPIExchange.php' );
 
@@ -39,7 +39,6 @@
 		$validTweets = [];
 
 		// get sql variable representing latest time done request
-		// $prevDateStr = 'Wed Mar 23 14:40:27 +0000 2022'; 
 
 		$recentDate = date_create_from_format('D M d G:i:s e Y',$prevDateStr);
 
@@ -67,9 +66,10 @@
 	}
 
 
+	// some extra filtration to allow/disallow certain things
+	// essentially adding 'nodes' between final sql insert that filter
 	function correctTypeOfTweet($txt){
 		return true;
-		//optimise this as it is important to control allowed
 
 		$lowerBound = 1;
 		$goodWords = ['startup','initiative','helping','saving','launched','launch','build','project','program','aim'];

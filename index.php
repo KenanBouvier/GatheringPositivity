@@ -2,13 +2,12 @@
 
     include('php/config/db_connect.php');
 
-    // max posts on the page at any point in time
-    // probably affects performance
     $numberOfPosts = 25;
 
     $buffer = 1000; // number of extra unused & unshown records before deletion
 
-    // if paused true then there won't be any updates
+    // if paused true then there won't be any updates 
+    // like a master switch :)
     $paused = false;
 
     //determining number of rows that aren't shown
@@ -47,7 +46,6 @@
     // fetch twitter link resulting rows
     $twitterlinks = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
-    // free result from memory as not needed
     mysqli_free_result($countResult);
     mysqli_free_result($result);
     mysqli_free_result($dateResult);
@@ -72,22 +70,12 @@
     </div>
     <h1 class = "title" >GATHERING POSITIVITY</h1>
 
-    <!-- <ul>
-        <li><a href="#">People<a/></li>
-        <li><a href="#">Technology</a></li>
-        <li><a href="#">Nature</a></li>
-    </ul> -->
     <br>
     <hr>
     <?php
         include 'php/get_tweets.php';
         $allAccounts = ['GoodNatureNews1','Agri_ut'];
 
-        // We can do this process for every user in list:
-        // Get all the tweets by that user
-        // Filter out and get the good tweets
-        // insert those tweets into DB
-        // that will then be displayed on page
 
     if(!$paused){
         foreach($allAccounts as $screen_name){
@@ -105,8 +93,6 @@
         }
 
 
-        //update sql variable to now. I.e: date('D M d G:i:s e Y')
-
         $nowDateStr = date('D M d G:i:s e Y');
 
         $sql = "UPDATE latestupdatedate SET latestDate = '$nowDateStr' WHERE id = 1";
@@ -119,7 +105,6 @@
         }
     } //end paused scope
 
-        //closing the connection
         mysqli_close($conn);
     ?>
     
